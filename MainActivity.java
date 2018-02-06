@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,17 +16,9 @@ import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String STATE_Name = "Name";
-    static final String STATE_Q1 = "Q1";
-    static final String STATE_Q2 = "Q2";
-    static final String STATE_Q3 = "Q3";
-    static final String STATE_Q4 = "Q4";
-    static final String STATE_Q5Text = "Q5Text";
-    static final String STATE_Q6Check1 = "Q6Check1";
-    static final String STATE_Q6Check2 = "Q6Check2";
+    static final String STATE_Name = "Score";
 
     private EditText nameField;
-    private Editable nameEditable;
     String name;
 
     private RadioGroup Q1;
@@ -43,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton Q4a;
 
     private EditText Q5Field;
-    private Editable Q5Editable;
     String Q5Text;
 
     private CheckBox Q6a;
@@ -57,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     String message;
 
-    boolean Q5Result, Q6Result;
+    boolean Q5Result = FALSE;
+    boolean Q6Result = FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +79,28 @@ public class MainActivity extends AppCompatActivity {
         finalScoreView = findViewById(R.id.Score);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current score state
+        savedInstanceState.putInt(STATE_Name, finalScore);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        finalScore = savedInstanceState.getInt(STATE_Name);
+
+        displayScore();
+    }
+
     public void SubmitResults (View view){
 
-        nameEditable = nameField.getText();
-        name = nameEditable.toString();
+        name = nameField.getText().toString();
 
         if(Q1a.isChecked()) finalScore++;
 
@@ -101,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(Q4a.isChecked()) finalScore++;
 
-        Q5Editable = Q5Field.getText();
-        Q5Text = Q5Editable.toString();
+        Q5Text = Q5Field.getText().toString();
 
         if(Q5Text.equals("ImageView") || Q5Text.equals("Image View")){
             finalScore++;
@@ -114,17 +122,9 @@ public class MainActivity extends AppCompatActivity {
             Q6Result = TRUE;
         }
 
-        finalScoreView.setText(String.valueOf(finalScore));
+        displayScore();
 
-        message = "Name: " + name;
-        message += "\n" + "Q1: " + Q1a.isChecked();
-        message += "\n" + "Q2: " + Q2b.isChecked();
-        message += "\n" + "Q3: " + Q3a.isChecked();
-        message += "\n" + "Q4: " + Q4a.isChecked();
-        message += "\n" + "Q5: " + Q5Result;
-        message += "\n" + "Q6: " + Q6Result;
-        message += "\n" + "Score: " + finalScore;
-        message += "\n" + "Best Wishes!";
+        scoreMessage();
     }
 
     public void ResetResults (View view){
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         nameField.getText().clear();
         name = "";
         finalScore = 0;
-        finalScoreView.setText(String.valueOf(finalScore));
+        displayScore();
 
         Q1.clearCheck();
         Q1a.setChecked(false);
@@ -170,5 +170,22 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+    }
+
+    public void displayScore(){
+
+        finalScoreView.setText(String.valueOf(finalScore));
+    }
+
+    public void scoreMessage(){
+        message = getResources().getString(R.string.messageName) + name;
+        message += "\n" + getResources().getString(R.string.messageQ1) + Q1a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ2) + Q2b.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ3) + Q3a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ4) + Q4a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ5) + Q5Result;
+        message += "\n" + getResources().getString(R.string.messageQ6) + Q6Result;
+        message += "\n" + getResources().getString(R.string.messageScore) + finalScore;
+        message += "\n" + getResources().getString(R.string.messageBest);
     }
 }
