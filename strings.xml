@@ -39,4 +39,15 @@
     <string name="ResetButton">reset</string>
     <string name="ShareButton">share</string>
 
+    <!--Java Strings-->
+    <string name="messageName">Name: </string>
+    <string name="messageQ1">Q1: </string>
+    <string name="messageQ2">Q2: </string>
+    <string name="messageQ3">Q3: </string>
+    <string name="messageQ4">Q4: </string>
+    <string name="messageQ5">Q5: </string>
+    <string name="messageQ6">Q6: </string>
+    <string name="messageScore">Score: </string>
+    <string name="messageBest">Best Wishes!</string>
+
 </resources>
