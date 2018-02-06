@@ -178,14 +178,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scoreMessage(){
-        message = getResources().getString(R.string.messageName) + name;
-        message += "\n" + getResources().getString(R.string.messageQ1) + Q1a.isChecked();
-        message += "\n" + getResources().getString(R.string.messageQ2) + Q2b.isChecked();
-        message += "\n" + getResources().getString(R.string.messageQ3) + Q3a.isChecked();
-        message += "\n" + getResources().getString(R.string.messageQ4) + Q4a.isChecked();
-        message += "\n" + getResources().getString(R.string.messageQ5) + Q5Result;
-        message += "\n" + getResources().getString(R.string.messageQ6) + Q6Result;
-        message += "\n" + getResources().getString(R.string.messageScore) + finalScore;
+        message = getResources().getString(R.string.messageName) + " " + name;
+        message += "\n" + getResources().getString(R.string.messageQ1) + " " + Q1a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ2) + " " + Q2b.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ3) + " " + Q3a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ4) + " " + Q4a.isChecked();
+        message += "\n" + getResources().getString(R.string.messageQ5) + " " + Q5Result;
+        message += "\n" + getResources().getString(R.string.messageQ6) + " " + Q6Result;
+        message += "\n" + getResources().getString(R.string.messageScore) + " " + finalScore;
         message += "\n" + getResources().getString(R.string.messageBest);
     }
 }
